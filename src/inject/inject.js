@@ -1,4 +1,4 @@
-chrome.extension.sendMessage({}, function(response) {
+chrome.runtime.sendMessage({}, function(response) {
     var readyStateCheckInterval = setInterval(function() {
         if (document.readyState === "complete") {
             clearInterval(readyStateCheckInterval);
@@ -45,7 +45,7 @@ chrome.extension.sendMessage({}, function(response) {
                 let response = JSON.parse(data);
                 let email = response.email;
                 let regex = /(?<=\+)[A-z0-9_.-]*(?=@)/gm;
-                let accountName = email.match(regex)[0];
+                let accountName = email.match(regex) ? email.match(regex)[0] : '';
                 request({"url":"/v4/account"}).then(data => {
                     let response = JSON.parse(data);
                     let accountId = response.id;
